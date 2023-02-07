@@ -2,13 +2,14 @@
 
 namespace WorldSimplifiedNewsApp.Controllers
 {
+    [Route("api/[controller]")]
     public class AuthController : ControllerBase
     {
         [HttpPost]
         [Route("Register")]
         public async Task<IActionResult> Resgister()
         {
-            return Ok();
+            return Ok(DotNetEnv.Env.GetString("TEST_STRING"));
         }
 
         [HttpPost]

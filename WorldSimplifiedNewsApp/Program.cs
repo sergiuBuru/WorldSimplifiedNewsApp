@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
+// load envirnoment variables
+DotNetEnv.Env.Load();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
