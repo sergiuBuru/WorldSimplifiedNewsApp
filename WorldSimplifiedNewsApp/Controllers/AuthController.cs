@@ -56,20 +56,25 @@ namespace WorldSimplifiedNewsApp.Controllers
                     return Ok(jwt);
                 }
 
+                List<String> Errors = new List<string>();
+                foreach(var error in is_created.Errors)
+                {
+                    Errors.Add(error.Description);
+                }
+
                 return BadRequest(new AuthResult()
                 {
-                    Errors = new List<string>()
-                    {
-                        "server error"
-                    }
+                    Errors= Errors
                 });
+            }
+            List<string> emailErrors = new List<string>();
+            foreach(var error in ModelState["Email"].Errors)
+            {
+                emailErrors.Add(error.ErrorMessage);
             }
             return BadRequest(new AuthResult()
             {
-                Errors = new List<string>()
-                    {
-                       "invalid payload"
-                    }
+                Errors = emailErrors
             });
         }
 
