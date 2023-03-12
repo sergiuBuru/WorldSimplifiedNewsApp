@@ -1,6 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -10,6 +11,8 @@ using WorldSimplifiedNewsApp.Models.DTOs;
 namespace WorldSimplifiedNewsApp.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
+    [EnableCors]
     public class AuthController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
@@ -22,7 +25,7 @@ namespace WorldSimplifiedNewsApp.Controllers
         }
 
         [HttpPost]
-        [Route("Register")]
+        [Route("Signup")]
         public async Task<IActionResult> Register([FromBody] UserRegisterRequestDto registerRequest)
         {
             if (ModelState.IsValid)

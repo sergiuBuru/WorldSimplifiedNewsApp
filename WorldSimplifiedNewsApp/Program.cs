@@ -6,7 +6,10 @@ using Microsoft.IdentityModel.Tokens;
 using WorldSimplifiedNewsApp.Configurations;
 using WorldSimplifiedNewsApp.Data;
 
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors();
 
 // load envirnoment variables
 DotNetEnv.Env.Load();
@@ -56,6 +59,7 @@ builder.Services.AddSingleton(tokenValidationParameters);
 builder.Services.AddDefaultIdentity<IdentityUser>(
         options => options.SignIn.RequireConfirmedEmail = false)
         .AddEntityFrameworkStores<AppDbContext>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,9 +71,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors(builder =>
+{
+    builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+});
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors();
+
 app.MapControllers();
 
 app.Run();
